@@ -12,7 +12,7 @@ namespace Hamsterdagis.UI
         {
             _context.Database.EnsureCreated();
             UserInterface userInterface = new UserInterface();
-            //userInterface.Menu();
+            userInterface.Menu();
             
             
             Console.ReadLine();

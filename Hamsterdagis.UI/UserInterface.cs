@@ -14,9 +14,12 @@ namespace Hamsterdagis.UI
         {
             
             HamsterDayCare h = new HamsterDayCare();
-            
             HamsterDayCare.ReadFile();
+            //HamsterDayCare.AddHamsters();
             HamsterDayCare.PrintHamsters();
+            
+            
+            //HamsterDayCare.PrintHamsters();
 
 
         }

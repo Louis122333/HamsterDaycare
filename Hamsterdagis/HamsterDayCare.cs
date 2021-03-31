@@ -9,11 +9,11 @@ namespace Hamsterdagis
 {
     public class HamsterDayCare
     {
-        private static List<Hamster> hamsterMaleList = new List<Hamster>();
-        private static List<Hamster> hamsterFemaleList = new List<Hamster>();
-        
-        
-        
+        //private static readonly List<Hamster> fileHamsters = new List<Hamster>();
+      
+        private static List<Hamster> arrivedHamsters = new List<Hamster>();
+
+
         public static void ReadFile()
         {
             string filePath = Path.Combine(Environment.CurrentDirectory, "Hamsterlista30");
@@ -33,27 +33,13 @@ namespace Hamsterdagis
                         {
                             string line = rdr.ReadLine();
                             string[] splitted = line.Split(';');
-                            if (splitted[2] == "M")
+                            arrivedHamsters.Add(new Hamster()
                             {
-                                hamsterMaleList.Add(new Hamster()
-                                {
-                                    Name = splitted[0],
-                                    Age = int.Parse(splitted[1]),
-                                    Gender = char.Parse(splitted[2]),
-                                    OwnerName = splitted[3]
-
-                                });
-                            }
-                            else if (splitted[2] == "K")
-                            {
-                                hamsterFemaleList.Add(new Hamster()
-                                {
-                                    Name = splitted[0],
-                                    Age = int.Parse(splitted[1]),
-                                    Gender = char.Parse(splitted[2]),
-                                    OwnerName = splitted[3]
-                                });
-                            }
+                                Name = splitted[0],
+                                Age = int.Parse(splitted[1]),
+                                Gender = char.Parse(splitted[2]),
+                                OwnerName = splitted[3]
+                            });
                         }
                     }
                 }
@@ -61,17 +47,24 @@ namespace Hamsterdagis
             
 
         }
+        //public static List<Hamster> AddHamsters()
+        //{
+        //    //for (int i = 0; i < arrivedHamsters.Count; i++)
+        //    //{
+        //    //    arrivedHamsters.Add(new Hamster());
+        //    //}
+        //    foreach (var hamster in fileHamsters)
+        //    {
+        //        arrivedHamsters.Add(new Hamster());
+        //    }
+            
+        //    return arrivedHamsters;
+        //}
         public static void PrintHamsters()
         {
-            Console.WriteLine("Males: ");
-            foreach (var male in hamsterMaleList)
+            foreach (var hamster in arrivedHamsters)
             {
-                Console.WriteLine($"Name: {male.Name} Age: {male.Age} Gender: {male.Gender} Owner: {male.OwnerName}");
-            }
-            Console.WriteLine("\nFemales: ");
-            foreach (var female in hamsterFemaleList)
-            {
-                Console.WriteLine($"Name: {female.Name} Age: {female.Age} Gender: {female.Gender} Owner: {female.OwnerName}");
+                Console.WriteLine($"{hamster.Name} {hamster.Age} {hamster.Gender} {hamster.OwnerName}");
             }
            
         }
