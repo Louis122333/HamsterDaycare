@@ -1,0 +1,12 @@
+C:\Users\llhea\source\repos\Hamsterdagis\bin\Debug\net5.0\Hamsterdagis.deps.json
+C:\Users\llhea\source\repos\Hamsterdagis\bin\Debug\net5.0\Hamsterdagis.dll
+C:\Users\llhea\source\repos\Hamsterdagis\bin\Debug\net5.0\ref\Hamsterdagis.dll
+C:\Users\llhea\source\repos\Hamsterdagis\bin\Debug\net5.0\Hamsterdagis.pdb
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\Hamsterdagis.csprojAssemblyReference.cache
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\Hamsterdagis.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\Hamsterdagis.AssemblyInfoInputs.cache
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\Hamsterdagis.AssemblyInfo.cs
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\Hamsterdagis.csproj.CoreCompileInputs.cache
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\Hamsterdagis.dll
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\ref\Hamsterdagis.dll
+C:\Users\llhea\source\repos\Hamsterdagis\obj\Debug\net5.0\Hamsterdagis.pdb
