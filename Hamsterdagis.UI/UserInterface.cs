@@ -13,15 +13,13 @@ namespace Hamsterdagis.UI
         public void Menu()
         {
             
-            HamsterDayCare h = new HamsterDayCare();
-            HamsterDayCare.ReadFile();
-            //HamsterDayCare.AddHamsters();
-            HamsterDayCare.PrintHamsters();
+         
             
             
-            //HamsterDayCare.PrintHamsters();
+            
 
 
         }
+
     }
 }

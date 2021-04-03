@@ -41,6 +41,7 @@ namespace Hamsterdagis.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(1)", nullable: false),
                     OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CageId = table.Column<int>(type: "int", nullable: true),
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastTimeExercised = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ExerciseAreaId = table.Column<int>(type: "int", nullable: true)
@@ -49,6 +50,12 @@ namespace Hamsterdagis.Migrations
                 {
                     table.PrimaryKey("PK_Hamsters", x => x.HamsterId);
                     table.ForeignKey(
+                        name: "FK_Hamsters_Cages_CageId",
+                        column: x => x.CageId,
+                        principalTable: "Cages",
+                        principalColumn: "CageId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Hamsters_ExerciseArea_ExerciseAreaId",
                         column: x => x.ExerciseAreaId,
                         principalTable: "ExerciseArea",
@@ -56,34 +63,10 @@ namespace Hamsterdagis.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "CageHamster",
-                columns: table => new
-                {
-                    CagesCageId = table.Column<int>(type: "int", nullable: false),
-                    HamsterId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CageHamster", x => new { x.CagesCageId, x.HamsterId });
-                    table.ForeignKey(
-                        name: "FK_CageHamster_Cages_CagesCageId",
-                        column: x => x.CagesCageId,
-                        principalTable: "Cages",
-                        principalColumn: "CageId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CageHamster_Hamsters_HamsterId",
-                        column: x => x.HamsterId,
-                        principalTable: "Hamsters",
-                        principalColumn: "HamsterId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_CageHamster_HamsterId",
-                table: "CageHamster",
-                column: "HamsterId");
+                name: "IX_Hamsters_CageId",
+                table: "Hamsters",
+                column: "CageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hamsters_ExerciseAreaId",
@@ -94,13 +77,10 @@ namespace Hamsterdagis.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CageHamster");
+                name: "Hamsters");
 
             migrationBuilder.DropTable(
                 name: "Cages");
-
-            migrationBuilder.DropTable(
-                name: "Hamsters");
 
             migrationBuilder.DropTable(
                 name: "ExerciseArea");

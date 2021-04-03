@@ -7,21 +7,26 @@ namespace Hamsterdagis.UI
 {
     class Program
     {
-        private static HamsterDBContext _context = new HamsterDBContext();
+
         static void Main(string[] args)
         {
+            
+            HamsterDayCare h = new HamsterDayCare();
+
+            //HamsterDayCare.ReadFile();
+            //HamsterDayCare.PrintHamsters();
+            var _context = new HamsterDBContext();
             _context.Database.EnsureCreated();
-            UserInterface userInterface = new UserInterface();
-            userInterface.Menu();
-            
-            
+
+
+
+
+
             Console.ReadLine();
 
         }
-        
-        
+
     }
-   
 }
        
 

@@ -10,10 +10,11 @@ namespace Hamsterdagis
         public int Age { get; set; }
         public char Gender { get; set; }
         public string OwnerName { get; set; }
+        public int? CageId { get; set; }
         public DateTime? ArrivalTime { get; set; }
         public DateTime? LastTimeExercised { get; set; }
        
-        public ICollection<Cage> Cages { get; set; }
+        public Cage Cage { get; set; }
 
 
     }

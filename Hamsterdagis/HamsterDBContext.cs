@@ -16,9 +16,9 @@ namespace Hamsterdagis
 
 
        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+       {
             optionsBuilder.UseSqlServer("Server=DESKTOP-DAT1QGR\\SQLEXPRESS;Database=advLouisHeadlam;Trusted_Connection=True");
-        }
+       }
 
 
     }

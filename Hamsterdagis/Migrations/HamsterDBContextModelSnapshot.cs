@@ -19,21 +19,6 @@ namespace Hamsterdagis.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CageHamster", b =>
-                {
-                    b.Property<int>("CagesCageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HamsterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CagesCageId", "HamsterId");
-
-                    b.HasIndex("HamsterId");
-
-                    b.ToTable("CageHamster");
-                });
-
             modelBuilder.Entity("Hamsterdagis.Cage", b =>
                 {
                     b.Property<int>("CageId")
@@ -71,6 +56,9 @@ namespace Hamsterdagis.Migrations
                     b.Property<DateTime?>("ArrivalTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("CageId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ExerciseAreaId")
                         .HasColumnType("int");
 
@@ -89,31 +77,29 @@ namespace Hamsterdagis.Migrations
 
                     b.HasKey("HamsterId");
 
+                    b.HasIndex("CageId");
+
                     b.HasIndex("ExerciseAreaId");
 
                     b.ToTable("Hamsters");
                 });
 
-            modelBuilder.Entity("CageHamster", b =>
-                {
-                    b.HasOne("Hamsterdagis.Cage", null)
-                        .WithMany()
-                        .HasForeignKey("CagesCageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hamsterdagis.Hamster", null)
-                        .WithMany()
-                        .HasForeignKey("HamsterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Hamsterdagis.Hamster", b =>
                 {
+                    b.HasOne("Hamsterdagis.Cage", "Cage")
+                        .WithMany("HamsterId")
+                        .HasForeignKey("CageId");
+
                     b.HasOne("Hamsterdagis.ExerciseArea", null)
                         .WithMany("Hamsters")
                         .HasForeignKey("ExerciseAreaId");
+
+                    b.Navigation("Cage");
+                });
+
+            modelBuilder.Entity("Hamsterdagis.Cage", b =>
+                {
+                    b.Navigation("HamsterId");
                 });
 
             modelBuilder.Entity("Hamsterdagis.ExerciseArea", b =>
