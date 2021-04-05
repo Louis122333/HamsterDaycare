@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,26 +11,46 @@ namespace Hamsterdagis
     public class HamsterDayCare
     {
 
-        private static List<Hamster> hamsterList;
-        private DateTime startDate;
-        private ExerciseArea exerciseArea;
-        private Cage cage;
-
-
         public HamsterDayCare()
         {
-            ReadFile();
-            PrintMaleHamsters();
-            Console.WriteLine("");
-            PrintFemaleHamsters();
-        }
-        
+            LoadHamsters();
+            CreatCages();
+            CreateExerciseArea();
+            //PlaceHamstersInCages();
+            PrintCages();
 
-        public static void ReadFile()
+            //PrintMaleHamsters();
+            //Console.WriteLine("");
+            //PrintFemaleHamsters();
+        }
+        public static void CreateExerciseArea()
         {
+            var dbContext = new HamsterDBContext();
+            if (!dbContext.ExerciseArea.Any())
+            {
+                dbContext.ExerciseArea.Add(new ExerciseArea());
+                dbContext.SaveChanges();
+            }
+        }
+        public static void CreatCages()
+        {
+            var dbcontext = new HamsterDBContext();
+            if (!dbcontext.Cages.Any())
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    dbcontext.Cages.Add(new Cage());
+                }
+            }
+            dbcontext.SaveChanges();
+        }
+        public static bool LoadHamsters()
+        {
+            bool needtoLoad = false;
             var dbContext = new HamsterDBContext();
             if (!dbContext.Hamsters.Any())
             {
+                needtoLoad = true;
                 string filePath = Path.Combine(Environment.CurrentDirectory, "Hamsterlista30");
                 string file = Directory.GetFiles(filePath, "*.csv").FirstOrDefault();
 
@@ -55,14 +76,52 @@ namespace Hamsterdagis
                         dbContext.SaveChanges();
                     }
                 }
-                
-               
-
             }
-            
 
+            return needtoLoad;
         }
-        
+
+        public static bool PlaceHamstersInCages()
+        {
+            var dbContext = new HamsterDBContext();
+
+            var femaleQueue = new Queue<Hamster>();
+            var maleQueue = new Queue<Hamster>();
+
+            foreach (var hamster in dbContext.Hamsters)
+            {
+                if (hamster.Gender == 'K')
+                {
+                    femaleQueue.Enqueue(hamster);
+                }
+                else if (hamster.Gender == 'M')
+                {
+                    maleQueue.Enqueue(hamster);
+                }
+            }
+            foreach (var cage in dbContext.Cages)
+            {
+                if (femaleQueue.Count > 0)
+                {
+                    for (int i = 0; i < cage.Size; i++)
+                    {
+                        var hamster = femaleQueue.Dequeue();
+                        cage.Hamsters.Add(hamster);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < cage.Size; i++)
+                    {
+                        var hamster = maleQueue.Dequeue();
+                        cage.Hamsters.Add(hamster);
+                    }
+                }
+            }
+            dbContext.SaveChanges();
+            return true;
+        }
+       
         #region Testmethods (Print hamsters)
         public static void PrintAllHamsters()
         {
@@ -74,6 +133,17 @@ namespace Hamsterdagis
             foreach (var hamster in query)
             {
                 Console.WriteLine($"Name: {hamster.Name} Age: {hamster.Age} Gender: {hamster.Gender} Owner: {hamster.OwnerName}");
+            }
+           
+        }
+        public static void PrintCages()
+        {
+            var dbContext = new HamsterDBContext();
+            var hamsters = dbContext.Hamsters.OrderBy(h => h.CageId);
+            foreach (var hamster in hamsters)
+            {
+                
+                Console.WriteLine($"{hamster.CageId} {hamster.Name} {hamster.Gender}");
             }
            
         }
