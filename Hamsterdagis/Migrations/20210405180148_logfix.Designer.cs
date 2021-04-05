@@ -4,14 +4,16 @@ using Hamsterdagis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hamsterdagis.Migrations
 {
     [DbContext(typeof(HamsterDBContext))]
-    partial class HamsterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210405180148_logfix")]
+    partial class logfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +50,9 @@ namespace Hamsterdagis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("HamsterId")
+                        .HasColumnType("int");
 
                     b.HasKey("CageId");
 

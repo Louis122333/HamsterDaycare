@@ -10,16 +10,7 @@ namespace Hamsterdagis.UI
     public class UserInterface
     {
         
-        public void Menu()
-        {
-            
-         
-            
-            
-            
-
-
-        }
+        //Menu()
 
     }
 }

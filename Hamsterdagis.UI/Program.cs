@@ -7,14 +7,17 @@ namespace Hamsterdagis.UI
 {
     class Program
     {
+       
 
         static void Main(string[] args)
         {
-            
-            HamsterDayCare h = new HamsterDayCare();
-            
             var _context = new HamsterDBContext();
             _context.Database.EnsureCreated();
+            HamsterDayCare h = new HamsterDayCare();
+
+            //Prints.PrintCages();
+            
+            
 
 
 

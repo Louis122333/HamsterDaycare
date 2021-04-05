@@ -10,19 +10,22 @@ namespace Hamsterdagis
 {
     public class HamsterDayCare
     {
+        
 
         public HamsterDayCare()
         {
-            LoadHamsters();
-            CreatCages();
-            CreateExerciseArea();
+
+            //LoadHamsters();
+            //CreatCages();
+            //CreateExerciseArea();
             //PlaceHamstersInCages();
-            PrintCages();
+            MoveHamstersToExercise();
 
             //PrintMaleHamsters();
             //Console.WriteLine("");
             //PrintFemaleHamsters();
         }
+        
         public static void CreateExerciseArea()
         {
             var dbContext = new HamsterDBContext();
@@ -32,7 +35,8 @@ namespace Hamsterdagis
                 dbContext.SaveChanges();
             }
         }
-        public static void CreatCages()
+            
+        public static void CreateCages()
         {
             var dbcontext = new HamsterDBContext();
             if (!dbcontext.Cages.Any())
@@ -73,6 +77,7 @@ namespace Hamsterdagis
                             Gender = char.Parse(splitted[2]),
                             OwnerName = splitted[3]
                         });
+                      
                         dbContext.SaveChanges();
                     }
                 }
@@ -107,6 +112,7 @@ namespace Hamsterdagis
                     {
                         var hamster = femaleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
+                        hamster.ActivityLogs.Add(new ActivityLog(DateTime.Now, Activity.Caged));
                     }
                 }
                 else
@@ -115,6 +121,7 @@ namespace Hamsterdagis
                     {
                         var hamster = maleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
+                        hamster.ActivityLogs.Add(new ActivityLog(DateTime.Now, Activity.Caged));
                     }
                 }
             }
@@ -122,6 +129,33 @@ namespace Hamsterdagis
             return true;
         }
        
+        public static void MoveHamstersToExercise()
+        {
+            var dbContext = new HamsterDBContext();
+            var exerciseArea = dbContext.ExerciseArea.First();
+            Hamster h = new Hamster();
+            char gender = h.Gender;
+            int counter = 0;
+            foreach (var cage in dbContext.Cages)
+            {
+                foreach (var hamster in cage.Hamsters)
+                {
+                    if (counter == 0)
+                    {
+                        gender = hamster.Gender;
+                    }
+                    if (hamster.Gender == gender && counter < exerciseArea.Size)
+                    {
+                        exerciseArea.Hamsters.Add(hamster);
+                        hamster.LastTimeExercised = DateTime.Now;
+                        counter++;
+                    }
+                }
+            }
+            dbContext.SaveChanges();
+        }
+       
+
         #region Testmethods (Print hamsters)
         public static void PrintAllHamsters()
         {
@@ -136,17 +170,17 @@ namespace Hamsterdagis
             }
            
         }
-        public static void PrintCages()
-        {
-            var dbContext = new HamsterDBContext();
-            var hamsters = dbContext.Hamsters.OrderBy(h => h.CageId);
-            foreach (var hamster in hamsters)
-            {
+        //public static void PrintCages()
+        //{
+        //    var dbContext = new HamsterDBContext();
+        //    var hamsters = dbContext.Hamsters.OrderBy(h => h.CageId);
+        //    foreach (var hamster in hamsters)
+        //    {
                 
-                Console.WriteLine($"{hamster.CageId} {hamster.Name} {hamster.Gender}");
-            }
+        //        Console.WriteLine($"{hamster.CageId} {hamster.Name} {hamster.Gender}");
+        //    }
            
-        }
+        //}
         public static void PrintMaleHamsters()
         {
             var dbContext = new HamsterDBContext();

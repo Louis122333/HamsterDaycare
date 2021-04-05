@@ -13,9 +13,10 @@ namespace Hamsterdagis
        public DbSet<Hamster> Hamsters { get; set; }
        public DbSet<Cage> Cages { get; set; }
        public DbSet<ExerciseArea> ExerciseArea { get; set; }
+       public DbSet<ActivityLog> ActivityLogs { get; set; }
 
 
-       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
        {
             optionsBuilder.UseSqlServer("Server=DESKTOP-DAT1QGR\\SQLEXPRESS;Database=advLouisHeadlam;Trusted_Connection=True");
        }

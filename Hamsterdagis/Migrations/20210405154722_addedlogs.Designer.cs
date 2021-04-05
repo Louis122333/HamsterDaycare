@@ -4,14 +4,16 @@ using Hamsterdagis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hamsterdagis.Migrations
 {
     [DbContext(typeof(HamsterDBContext))]
-    partial class HamsterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210405154722_addedlogs")]
+    partial class addedlogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,35 +21,15 @@ namespace Hamsterdagis.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Hamsterdagis.ActivityLog", b =>
-                {
-                    b.Property<int>("ActivityLogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Activity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HamsterId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ActivityLogId");
-
-                    b.HasIndex("HamsterId");
-
-                    b.ToTable("ActivityLogs");
-                });
-
             modelBuilder.Entity("Hamsterdagis.Cage", b =>
                 {
                     b.Property<int>("CageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("HamsterId")
+                        .HasColumnType("int");
 
                     b.HasKey("CageId");
 
@@ -107,13 +89,27 @@ namespace Hamsterdagis.Migrations
                     b.ToTable("Hamsters");
                 });
 
-            modelBuilder.Entity("Hamsterdagis.ActivityLog", b =>
+            modelBuilder.Entity("Hamsterdagis.Log", b =>
                 {
-                    b.HasOne("Hamsterdagis.Hamster", "Hamster")
-                        .WithMany("ActivityLogs")
-                        .HasForeignKey("HamsterId");
+                    b.Property<int>("LogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Navigation("Hamster");
+                    b.Property<int>("Activity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HamsterId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("LogId");
+
+                    b.HasIndex("HamsterId");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Hamsterdagis.Hamster", b =>
@@ -129,6 +125,13 @@ namespace Hamsterdagis.Migrations
                     b.Navigation("Cage");
                 });
 
+            modelBuilder.Entity("Hamsterdagis.Log", b =>
+                {
+                    b.HasOne("Hamsterdagis.Hamster", null)
+                        .WithMany("Logs")
+                        .HasForeignKey("HamsterId");
+                });
+
             modelBuilder.Entity("Hamsterdagis.Cage", b =>
                 {
                     b.Navigation("Hamsters");
@@ -141,7 +144,7 @@ namespace Hamsterdagis.Migrations
 
             modelBuilder.Entity("Hamsterdagis.Hamster", b =>
                 {
-                    b.Navigation("ActivityLogs");
+                    b.Navigation("Logs");
                 });
 #pragma warning restore 612, 618
         }
