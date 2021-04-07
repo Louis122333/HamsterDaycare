@@ -4,14 +4,16 @@ using Hamsterdagis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hamsterdagis.Migrations
 {
     [DbContext(typeof(HamsterDBContext))]
-    partial class HamsterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210406131546_wtf")]
+    partial class wtf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

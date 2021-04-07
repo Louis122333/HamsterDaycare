@@ -12,6 +12,8 @@ namespace Hamsterdagis.UI
         {
             var dbContext = new HamsterDBContext();
             var hamsters = dbContext.Hamsters.OrderBy(h => h.CageId);
+            var cages = dbContext.Cages.OrderBy(c => c.CageId);
+           
             foreach (var hamster in hamsters)
             {
 

@@ -4,14 +4,16 @@ using Hamsterdagis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hamsterdagis.Migrations
 {
     [DbContext(typeof(HamsterDBContext))]
-    partial class HamsterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210406102359_fixcageandhamster")]
+    partial class fixcageandhamster
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,15 +120,13 @@ namespace Hamsterdagis.Migrations
 
             modelBuilder.Entity("Hamsterdagis.Hamster", b =>
                 {
-                    b.HasOne("Hamsterdagis.Cage", "Cage")
+                    b.HasOne("Hamsterdagis.Cage", null)
                         .WithMany("Hamsters")
                         .HasForeignKey("CageId");
 
                     b.HasOne("Hamsterdagis.ExerciseArea", "ExerciseArea")
                         .WithMany("Hamsters")
                         .HasForeignKey("ExerciseAreaId");
-
-                    b.Navigation("Cage");
 
                     b.Navigation("ExerciseArea");
                 });

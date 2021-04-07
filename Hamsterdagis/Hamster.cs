@@ -15,6 +15,8 @@ namespace Hamsterdagis
         public DateTime? LastTimeExercised { get; set; }
        
         public Cage Cage { get; set; }
+        public int? ExerciseAreaId { get; set; }
+        public ExerciseArea ExerciseArea { get; set; }
         public ICollection<ActivityLog> ActivityLogs { get; set; }
 
 
