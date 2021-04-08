@@ -15,7 +15,7 @@ namespace Hamsterdagis.UI
             _context.Database.EnsureCreated();
             HamsterDayCare h = new HamsterDayCare();
 
-           Prints.PrintCages();
+           //Prints.PrintCages();
             
             
 

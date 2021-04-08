@@ -10,27 +10,44 @@ namespace Hamsterdagis
 {
     public class HamsterDayCare
     {
-       /*TODO - Fixa MoveToExercise() -> MoveFromExercise
-        *       Hamstrarna sparas inte i ExerciseArea
-        *       HashSet<Hamster> Fuckar
-        */
+        /*TODO - Fixa MoveToExercise() -> MoveFromExercise
+         *       Hamstrarna sparas inte i ExerciseArea
+         *       HashSet<Hamster> Fuckar
+         */
 
         public HamsterDayCare()
         {
+            //ResetData();
+            PlaceHamstersInCages();
 
             //LoadHamsters();
             //CreateCages();
             //CreateExerciseArea();
-            PlaceHamstersInCages();
-            MoveToExercise('K');
-            MoveFromExercise();
-            MoveToExercise('M');
-            MoveFromExercise();
+
+            //MoveToExercise('K');            
+            //MoveFromExercise();
+            //MoveToExercise('M');
+            //MoveFromExercise();
 
             //MoveFromExercise();
 
         }
-        
+        public static bool ResetData()
+        {
+            bool noData = false;
+            var dbContext = new HamsterDBContext();
+            if (dbContext.Hamsters.Any())
+            {
+                foreach (var hamster in dbContext.Hamsters)
+                {
+                    hamster.CageId = null;
+                    hamster.ExerciseAreaId = null;
+                    hamster.LastTimeExercised = null;
+                }
+            }
+            dbContext.SaveChanges();
+            return noData;
+        }
         public static bool CreateExerciseArea()
         {
             bool noData = false;
@@ -43,16 +60,6 @@ namespace Hamsterdagis
             }
             return noData;
         }
-        public static void ClearHamsters()
-        {
-            var dbContext = new HamsterDBContext();
-            
-            var all = from h in dbContext.Hamsters select h;
-            dbContext.Hamsters.RemoveRange(all);
-            dbContext.SaveChanges();
-        }
-       
-            
         public static bool CreateCages()
         {
             bool noData = false;
@@ -97,7 +104,7 @@ namespace Hamsterdagis
                             Gender = char.Parse(splitted[2]),
                             OwnerName = splitted[3]
                         });
-                      
+
                         dbContext.SaveChanges();
                     }
                 }
@@ -128,16 +135,17 @@ namespace Hamsterdagis
             {
                 if (femaleQueue.Count > 0)
                 {
-                    for (int i = 0; i < cage.Size; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         var hamster = femaleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
-                       //hamster.ActivityLogs.Add(new ActivityLog(DateTime.Now, Activity.Caged));
+                        //hamster.ActivityLogs.Add(new ActivityLog(DateTime.Now, Activity.Caged));
+
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < cage.Size; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         var hamster = maleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
@@ -161,19 +169,19 @@ namespace Hamsterdagis
             {
                 exerciseQueue.Enqueue(hamsters[i]);
             }
-            if (exerciseQueue.Count > exerciseArea.Size)
+            if (exerciseQueue.Count > 6)
             {
-                for (int i = 0; i < exerciseArea.Size; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     var hamster = exerciseQueue.Dequeue();
                     var cage = dbContext.Cages
                         .Where(c => c.CageId == hamster.CageId)
                         .First();
-                    exerciseArea.Hamsters.Add(hamster);//
+                    exerciseArea.Hamsters.Add(hamster);
                     hamster.CageId = null;
                     hamster.ExerciseAreaId = exerciseArea.ExerciseAreaId;
                     hamster.LastTimeExercised = DateTime.Now;
-                    //dbContext.SaveChanges();
+                    dbContext.SaveChanges();
                 }
             }
             else if (exerciseQueue.Count == 3)
@@ -187,7 +195,7 @@ namespace Hamsterdagis
                     hamster.CageId = null;
                     hamster.ExerciseAreaId = exerciseArea.ExerciseAreaId;
                     hamster.LastTimeExercised = DateTime.Now;
-                   // dbContext.SaveChanges();
+                    dbContext.SaveChanges();
                 }
             }
         }
@@ -210,91 +218,35 @@ namespace Hamsterdagis
                     maleQueue.Enqueue(hamster);
                 }
             }
-            foreach (var cage in dbContext.Cages)
+            var query = dbContext.Cages.Where(c => c.Hamsters.Count < 3);
+            foreach (var cage in query)
             {
                 if (femaleQueue.Count > 0)
                 {
-                    for (int i = 0; i < cage.Size; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         var hamster = femaleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
-                        hamster.ExerciseAreaId = null;
                         hamster.CageId = cage.CageId;
-
+                        hamster.ExerciseAreaId = null;
                     }
                 }
-                if (maleQueue.Count > 0)
+                else if (maleQueue.Count > 0)
                 {
-                    for (int i = 0; i < cage.Size; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         var hamster = maleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
-                        hamster.ExerciseAreaId = null;
                         hamster.CageId = cage.CageId;
+                        hamster.ExerciseAreaId = null;
                     }
                 }
-            }
-                
-            //foreach (var hamster in dbContext.ExerciseArea)
-            //{
-            //    foreach (var fitHamster in hamster.Hamsters)
-            //    {
-            //        var cage = dbContext.Cages.First(c => c.Hamsters.Count < 3);
-            //        cage.Hamsters.Add(fitHamster);
-            //        fitHamster.CageId = cage.CageId;
-            //        fitHamster.ExerciseAreaId = null;
-                    
 
-            //    }
-            //}
-            //dbContext.SaveChanges();
-        }
-     
-       
-        
-        #region Testmethods (Print hamsters)
-        public static void PrintAllHamsters()
-        {
-            var dbContext = new HamsterDBContext();
-            var query = from h in dbContext.Hamsters
-                        select h;
-                       
-                        
-            foreach (var hamster in query)
-            {
-                Console.WriteLine($"Name: {hamster.Name} Age: {hamster.Age} Gender: {hamster.Gender} Owner: {hamster.OwnerName}");
             }
-           
-        }
-    
-        public static void PrintMaleHamsters()
-        {
-            var dbContext = new HamsterDBContext();
-            var query = from h in dbContext.Hamsters
-                        where h.Gender == 'M'
-                        select h;
+            dbContext.SaveChanges();
 
-
-            foreach (var hamster in query)
-            {
-                Console.WriteLine($"Name: {hamster.Name} Age: {hamster.Age} Gender: {hamster.Gender} Owner: {hamster.OwnerName}");
-            }
 
         }
-        public static void PrintFemaleHamsters()
-        {
-            var dbContext = new HamsterDBContext();
-            var query = from h in dbContext.Hamsters
-                        where h.Gender == 'K'
-                        select h;
 
-
-            foreach (var hamster in query)
-            {
-                Console.WriteLine($"Name: {hamster.Name} Age: {hamster.Age} Gender: {hamster.Gender} Owner: {hamster.OwnerName}");
-            }
-
-        }
-        #endregion
     }
 }

@@ -5725,11 +5725,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\llhea\\Source\\Repos\\HamsterDaycare\\Hamsterdagis.UI\\Hamsterdagis.UI.csproj",
+      "projectUniqueName": "C:\\Users\\llhea\\source\\repos\\HamsterDaycare\\Hamsterdagis.UI\\Hamsterdagis.UI.csproj",
       "projectName": "Hamsterdagis.UI",
-      "projectPath": "C:\\Users\\llhea\\Source\\Repos\\HamsterDaycare\\Hamsterdagis.UI\\Hamsterdagis.UI.csproj",
+      "projectPath": "C:\\Users\\llhea\\source\\repos\\HamsterDaycare\\Hamsterdagis.UI\\Hamsterdagis.UI.csproj",
       "packagesPath": "C:\\Users\\llhea\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\llhea\\Source\\Repos\\HamsterDaycare\\Hamsterdagis.UI\\obj\\",
+      "outputPath": "C:\\Users\\llhea\\source\\repos\\HamsterDaycare\\Hamsterdagis.UI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\llhea\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5746,8 +5746,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\llhea\\Source\\Repos\\HamsterDaycare\\Hamsterdagis\\Hamsterdagis.csproj": {
-              "projectPath": "C:\\Users\\llhea\\Source\\Repos\\HamsterDaycare\\Hamsterdagis\\Hamsterdagis.csproj"
+            "C:\\Users\\llhea\\source\\repos\\HamsterDaycare\\Hamsterdagis\\Hamsterdagis.csproj": {
+              "projectPath": "C:\\Users\\llhea\\source\\repos\\HamsterDaycare\\Hamsterdagis\\Hamsterdagis.csproj"
             }
           }
         }

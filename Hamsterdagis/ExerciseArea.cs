@@ -9,7 +9,6 @@ namespace Hamsterdagis
     public class ExerciseArea
     {
         public int ExerciseAreaId { get; set; }
-        public int Size = 6;
         public ExerciseArea()
         {
             Hamsters = new HashSet<Hamster>();

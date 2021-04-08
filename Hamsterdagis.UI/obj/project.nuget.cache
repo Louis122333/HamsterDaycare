@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gKUFZu5lMvYBBt5dy14ebtFhHwThmN5objzUzNdarNwAowam3zh1r2Cnzdx+2tIlHD5YFwhQjwrV94qhnbKFUg==",
+  "dgSpecHash": "0EpOiN9iX9Wj19Kiu3OzczW3HJ9wpTtck3+Zth/A09NyJ6Im2sjOUgiBynoxOfxjYm1FR8pxswhX25Fn6ir1uQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\llhea\\Source\\Repos\\HamsterDaycare\\Hamsterdagis.UI\\Hamsterdagis.UI.csproj",
+  "projectFilePath": "C:\\Users\\llhea\\source\\repos\\HamsterDaycare\\Hamsterdagis.UI\\Hamsterdagis.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\llhea\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\llhea\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",

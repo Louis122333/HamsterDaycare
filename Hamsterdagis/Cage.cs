@@ -9,12 +9,10 @@ namespace Hamsterdagis
     public class Cage
     {
         public int CageId { get; set; }
-        public int Size = 3;
-       
-        //public Cage()
-        //{
-        //    Hamsters = new HashSet<Hamster>();
-        //}
+        public Cage()
+        {
+            Hamsters = new HashSet<Hamster>();
+        }
         public ICollection<Hamster> Hamsters { get; set; }
     }
 }
