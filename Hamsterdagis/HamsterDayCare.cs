@@ -141,7 +141,7 @@ namespace Hamsterdagis
                         var hamster = femaleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
                         hamster.ActivityLogs.Add(new ActivityLog(DateTime.Now, Activity.Caged));
-
+                        
                     }
                 }
                 else

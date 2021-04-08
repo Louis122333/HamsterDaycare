@@ -8,18 +8,37 @@ namespace Hamsterdagis.UI
 {
     public class Prints
     {
-        public static void PrintCages()
+        public static void PrintHamsters()
         {
             var dbContext = new HamsterDBContext();
-            var hamsters = dbContext.Hamsters.OrderBy(h => h.CageId);
-            var cages = dbContext.Cages.OrderBy(c => c.CageId);
-           
+            var hamsters = dbContext.Hamsters.OrderBy(h => h.Name);
+            
             foreach (var hamster in hamsters)
             {
-
-                Console.WriteLine($"{hamster.CageId} {hamster.Name} {hamster.Gender}");
+               if (hamster.Gender == 'K')
+               {
+                    var gender = "Female";
+                    Console.WriteLine($"Hamster: {hamster.Name}\nAge: {hamster.Age} months\nGender: {gender}\nOwner: {hamster.OwnerName}");
+                    Console.WriteLine();
+               }
+               else
+               {
+                    var gender = "Male";
+                    Console.WriteLine($"Hamster: {hamster.Name}\nAge: {hamster.Age} months\nGender: {gender}\nOwner: {hamster.OwnerName}");
+                    Console.WriteLine();
+               }
             }
+        }
+        public static void PrintMenuOptions()
+        {
+            Prints.PrintMenuPrompt();
 
+            
+            Console.WriteLine("1. Start simulation");
+            Console.WriteLine("2. Print hamster info");
+            Console.WriteLine("3. Exit");
+            Console.WriteLine();
+            Console.Write("Enter an option: ");
         }
         public static void PrintMenuPrompt()
         {
