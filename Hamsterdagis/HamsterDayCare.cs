@@ -10,14 +10,18 @@ namespace Hamsterdagis
 {
     public class HamsterDayCare
     {
-        /*TODO - Fixa MoveToExercise() -> MoveFromExercise
-         *       Hamstrarna sparas inte i ExerciseArea
-         *       HashSet<Hamster> Fuckar
+        /*TODO - Fixa Utskrift till Konsollen (skriver ut dubbletter vid ticks)
+         *       Skapa metod som räknar hur lång tid hamstrarna har väntat på Exercise
+         *       Skapa en FinalLog som skriver ut info vid dagens slut
+         *       
+         *       
+         *       
+         *       
          */
 
         public HamsterDayCare()
         {
-            
+            ClearLogs();
             ResetData();
             InitializeDB();
         }
@@ -47,6 +51,18 @@ namespace Hamsterdagis
             }
             dbContext.SaveChanges();
             return noData;
+        }
+        public static void ClearLogs()
+        {
+            var dbContext = new HamsterDBContext();
+            if (dbContext.ActivityLogs.Any())
+            {
+                foreach (var log in dbContext.ActivityLogs)
+                {
+                    dbContext.Remove(log);
+                }
+            }
+            dbContext.SaveChanges();
         }
         public static bool CreateExerciseArea()
         {
