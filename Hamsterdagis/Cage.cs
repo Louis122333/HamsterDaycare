@@ -13,6 +13,6 @@ namespace Hamsterdagis
         {
             Hamsters = new HashSet<Hamster>();
         }
-        public ICollection<Hamster> Hamsters { get; set; }
+        public virtual ICollection<Hamster> Hamsters { get; set; }
     }
 }

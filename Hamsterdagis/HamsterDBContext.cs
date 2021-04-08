@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Hamsterdagis
 {
@@ -17,10 +18,12 @@ namespace Hamsterdagis
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-DAT1QGR\\SQLEXPRESS;Database=advLouisHeadlamTest;Trusted_Connection=True;MultipleActiveResultSets=True;");
-       }
+        {
+            optionsBuilder.UseSqlServer("Server=DESKTOP-DAT1QGR\\SQLEXPRESS;Database=advLouisHeadlamTest;Trusted_Connection=True;MultipleActiveResultSets=True;").UseLazyLoadingProxies();
+            
+        }
+        
 
-
+        
     }
 }

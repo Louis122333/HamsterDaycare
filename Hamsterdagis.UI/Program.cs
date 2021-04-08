@@ -14,8 +14,8 @@ namespace Hamsterdagis.UI
             var _context = new HamsterDBContext();
             _context.Database.EnsureCreated();
             HamsterDayCare h = new HamsterDayCare();
-
-           //Prints.PrintCages();
+            UserInterface.HamsterMenu();
+           
             
             
 

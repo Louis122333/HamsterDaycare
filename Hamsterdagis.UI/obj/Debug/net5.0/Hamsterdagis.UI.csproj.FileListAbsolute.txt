@@ -63,3 +63,5 @@ C:\Users\llhea\Source\Repos\HamsterDaycare\Hamsterdagis.UI\obj\Debug\net5.0\Hams
 C:\Users\llhea\Source\Repos\HamsterDaycare\Hamsterdagis.UI\obj\Debug\net5.0\ref\Hamsterdagis.UI.dll
 C:\Users\llhea\Source\Repos\HamsterDaycare\Hamsterdagis.UI\obj\Debug\net5.0\Hamsterdagis.UI.pdb
 C:\Users\llhea\Source\Repos\HamsterDaycare\Hamsterdagis.UI\obj\Debug\net5.0\Hamsterdagis.UI.genruntimeconfig.cache
+C:\Users\llhea\source\repos\HamsterDaycare\Hamsterdagis.UI\bin\Debug\net5.0\Castle.Core.dll
+C:\Users\llhea\source\repos\HamsterDaycare\Hamsterdagis.UI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Proxies.dll
