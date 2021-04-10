@@ -48,7 +48,7 @@ namespace Hamsterdagis.UI
                 simulation.RunSimulation();
                 StartSim();
                 PrintActivity();
-                MainMenu();
+                
             }
         }
         public static void MainMenu()
@@ -64,7 +64,6 @@ namespace Hamsterdagis.UI
                 {
                     case 1:
                         SimulationMenu();
-                        showmenu = false;
                         break;
                     case 2:
                         Prints.PrintHamsters();
@@ -83,9 +82,7 @@ namespace Hamsterdagis.UI
                     default:
                         break;
                 }
-
             }
-          
         }
         private static void PrintActivity()
         {
@@ -107,29 +104,32 @@ namespace Hamsterdagis.UI
                     Console.WriteLine();
                     Console.SetCursorPosition(20, 7);
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Name   \tActivity");
+                    Console.WriteLine($"Name   \tActivity   \tTimes Exercised   \tTime waited for first exercise");
                     Console.ResetColor();
                     Console.WriteLine();
 
                     //Sets the condition for the cursor position, iterates +1 for every hamster
                     var hamsterCounter = 8;
+                    
                     foreach (var activity in activityLogs)
                     {
+                        int timesExercised = activity.Hamster.ActivityLogs.Where(a => a.Activity == Activity.Exercising && a.Timestamp <= date).Count() / 10;
+                        var minutes = ExerciseWaitTime(activity.Hamster, date);
                         if (activity.Hamster.Gender == 'K')
                         {
                             Console.ForegroundColor = ConsoleColor.Magenta;
                             Console.SetCursorPosition(20, hamsterCounter);
-                            Console.WriteLine("{0,-10}\t{1,-12}", activity.Hamster.Name, activity.Activity);
+                            Console.WriteLine("{0,-10}\t{1,-12}\t{2,-22}\t{3} minutes", activity.Hamster.Name, activity.Activity, timesExercised, minutes);
                             Console.ResetColor();
                         }
                         if (activity.Hamster.Gender == 'M')
                         {
                             Console.ForegroundColor = ConsoleColor.Cyan;
                             Console.SetCursorPosition(20, hamsterCounter);
-                            Console.WriteLine("{0,-10}\t{1,-12}", activity.Hamster.Name, activity.Activity);
+                            
+                            Console.WriteLine("{0,-10}\t{1,-12}\t{2,-22}\t{3} minutes", activity.Hamster.Name, activity.Activity, timesExercised, minutes);
                             Console.ResetColor();
                         }
-                      
                         hamsterCounter++;
                     }
                     
@@ -144,80 +144,10 @@ namespace Hamsterdagis.UI
                     Console.ResetColor();
                 }
             }
-            
-
-
         }
        
-        public static void PrintActivity2()
-        {
-            var dbContext = new HamsterDBContext();
-            var thisDate = DateTime.Now;
-            var date = new DateTime(thisDate.Year, thisDate.Month, thisDate.Day, 7, 0, 0);
-            var counter = 0;
-            while (true)
-            {
-                Thread.Sleep(_printSpeed);
-                var activityLogs = dbContext.ActivityLogs.Where(a => a.Timestamp == date).OrderBy(h => h.Hamster.Name).ThenBy(h => h.Activity).ToList();
-                if (activityLogs.Count == 60 && counter == 0)
-                {
-                    Console.WriteLine($"Tick {counter++} {date}");
-                    Console.WriteLine();
-                    Console.WriteLine("Name     Activity");
-                    Console.WriteLine();
-                    var counter2 = 2;
-                    foreach (var activity in activityLogs)
-                    {
-                        if (counter2 % 2 == 0)
-                        {
-                            int timesExercised = activity.Hamster.ActivityLogs.Where(a => a.Activity == Activity.Exercising && a.Timestamp <= date).Count() / 10;
-                            var minutes = ExerciseWaitTime(activity.Hamster, date);
-                            Console.WriteLine($"{activity.Hamster.Name} {activity.Activity} {minutes}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{activity.Activity}");
-                        }
-                        counter2++;
-                    }
-                    if (date.Hour == 17)
-                    {
-                        date = date.AddHours(14);
-                        counter = 0;
-                    }
-                    else
-                    {
-                        date = date.AddMinutes(6);
-                    }
-                    Console.WriteLine();
-                }
-                else if (activityLogs.Count > 1 && counter > 0)
-                {
-                    Console.WriteLine($"Tick {counter++} {date}");
-                    Console.WriteLine();
-                    Console.WriteLine("Name     Activity");
-                    foreach (var activity in activityLogs)
-                    {
-                        int timesExercised = activity.Hamster.ActivityLogs.Where(a => a.Activity == Activity.Exercising && a.Timestamp <= date).Count() / 10;
-                        var hours = ExerciseWaitTime(activity.Hamster, date);
-                        Console.WriteLine($"{activity.Hamster.Name} {activity.Activity} {hours}");
-                    }
-                    if (date.Hour == 17)
-                    {
-                        date = date.AddHours(14);
-                        counter = 0;
-                    }
-                    else
-                    {
-                        date = date.AddMinutes(6);
-                    }
-                    Console.WriteLine();
-
-                }
-            }
-
-        }
-        public static int ExerciseWaitTime(Hamster hamster, DateTime date)
+       
+        private static int ExerciseWaitTime(Hamster hamster, DateTime date)
         {
             var activityList = hamster.ActivityLogs.Where(h => h.Activity == Activity.Exercising).ToList().OrderBy(a => a.Timestamp);
             var arrivalTime = new TimeSpan(7, 0, 0);
