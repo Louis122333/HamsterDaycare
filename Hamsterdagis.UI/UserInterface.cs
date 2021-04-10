@@ -43,10 +43,11 @@ namespace Hamsterdagis.UI
             }
             else
             {
+                StartSim();
                 Console.Clear();
                 var simulation = new Simulation(tickSpeed, days);
                 simulation.RunSimulation();
-                StartSim();
+                
                 PrintActivity();
                 
             }
@@ -99,7 +100,7 @@ namespace Hamsterdagis.UI
                    
                     Console.SetCursorPosition(20, 5);
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine($"Tick: {counter++} Date: {date}");
+                    Console.WriteLine($"Date: {date}");
                     Console.ResetColor();
                     Console.WriteLine();
                     Console.SetCursorPosition(20, 7);
@@ -198,17 +199,23 @@ namespace Hamsterdagis.UI
                 while (i == 14 || i == 35)
                 {
                     Thread.Sleep(1500);
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("Separating boys from girls..");
+                    Console.ResetColor();
                     break;
                 }
                 while (i == 59 || i == 99)
                 {
-                    Thread.Sleep(1500);
+                    Thread.Sleep(1000);
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.Write("Throwing hamsters in cages..");
+                    Console.ResetColor();
                     break;
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("Complete! Starting simulation...");
+            Console.ResetColor();
             Thread.Sleep(1000);
             Console.Clear();
         }
