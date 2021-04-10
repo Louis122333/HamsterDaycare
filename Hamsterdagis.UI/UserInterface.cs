@@ -10,7 +10,7 @@ namespace Hamsterdagis.UI
 {
     public class UserInterface
     {
-        private static int _printSpeed;
+        private static int _speed;
         public static void SimulationMenu()
         {
             Console.Write("Enter how many days you want to simulate: ");
@@ -23,8 +23,8 @@ namespace Hamsterdagis.UI
                 SimulationMenu();
             }
             Console.Write("Enter the tick speed (ms): ");
-            _ = int.TryParse(Console.ReadLine(), out int tickSpeed);
-            if (tickSpeed < 1 || tickSpeed > 3000)
+            _ = int.TryParse(Console.ReadLine(), out int tick);
+            if (tick < 1 || tick > 3000)
             {
                 Console.WriteLine("Invalid tick speed");
                 Console.WriteLine("Press any key to return");
@@ -32,9 +32,9 @@ namespace Hamsterdagis.UI
                 SimulationMenu();
             }
             Console.Write("Enter the print speed (ms): ");
-            _ = int.TryParse(Console.ReadLine(), out int printSpeed);
-            _printSpeed = printSpeed;
-            if (printSpeed < tickSpeed)
+            _ = int.TryParse(Console.ReadLine(), out int speed);
+            _speed = speed;
+            if (speed < tick)
             {
                 Console.WriteLine("Print speed must be higher or equal to tick speed");
                 Console.WriteLine("Press any key...");
@@ -45,11 +45,9 @@ namespace Hamsterdagis.UI
             {
                 StartSim();
                 Console.Clear();
-                var simulation = new Simulation(tickSpeed, days);
+                var simulation = new Simulation(tick, days);
                 simulation.RunSimulation();
-                
                 PrintActivity();
-                
             }
         }
         public static void MainMenu()
@@ -88,11 +86,11 @@ namespace Hamsterdagis.UI
         private static void PrintActivity()
         {
             var dbContext = new HamsterDBContext();
-            var printingActivity = true;
-            while (printingActivity)
+            var printing = true;
+            while (printing)
             {
                 var date = Simulation.Date;
-                Thread.Sleep(_printSpeed);
+                Thread.Sleep(_speed);
                 var activityLogs = dbContext.ActivityLogs.Where(a => a.Timestamp == date).OrderBy(h => h.Hamster.Name);
                 if (activityLogs.Count() > 1)
                 {
@@ -202,8 +200,8 @@ namespace Hamsterdagis.UI
                 while (i == 14 || i == 35)
                 {
                     Thread.Sleep(1500);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("Separating boys from girls..");
+                    Console.Write("Separating "); Console.ForegroundColor = ConsoleColor.Cyan; Console.Write("boys ");
+                    Console.ResetColor(); Console.Write("and"); Console.ForegroundColor = ConsoleColor.Magenta; Console.Write(" girls");
                     Console.ResetColor();
                     break;
                 }
@@ -211,7 +209,7 @@ namespace Hamsterdagis.UI
                 {
                     Thread.Sleep(1000);
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write("Throwing hamsters in cages..");
+                    Console.Write("Throwing hamsters in cages...");
                     Console.ResetColor();
                     break;
                 }

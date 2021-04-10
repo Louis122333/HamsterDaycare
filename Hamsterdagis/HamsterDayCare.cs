@@ -13,7 +13,7 @@ namespace Hamsterdagis
         /*TODO - 
          *     Lös så att programmet inte fastnar i while-loopen (kom tillbaka till menyn)
          *     Lös så att man kan simulera mer än 1 dag
-         *    
+         *     Alternativ utökning: Menyval: Sök på hamsternamn och få ut info om aktiviteter/Burplaceringar
          */
 
         public HamsterDayCare()
