@@ -5,8 +5,8 @@ SUT20 April 2021
 Examination Advanced .NET
 
 Instructions:
-Build a simulated hamster daycare that handles 30 hamsters correctly based on the instructions given.
-* All data and status updates is saved to a SQL-database that is handled through Entity Framework Core - Code First or Database First (I chose Code First)
+Build a simulated hamster daycare that correctly handles 30 hamsters based on the instructions given.
+* All data and status updates are saved to a SQL-database that is handled through Entity Framework Core - Code First or Database First (I chose Code First)
 
 * Create a structure for the application, it should be split into atleast two assemblies.
 
