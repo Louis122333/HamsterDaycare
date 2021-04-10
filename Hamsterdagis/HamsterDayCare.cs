@@ -11,14 +11,8 @@ namespace Hamsterdagis
     public class HamsterDayCare
     {
         /*TODO - 
-         *       Skapa metod som räknar hur lång tid hamstrarna har väntat på Exercise
-         *       
-         *       Skapa en FinalLog som skriver ut info vid dagens slut //eller Sökfunktion på specifik hamster
-         *       som skriver ut all info
-         *       
-         *       TOMBU KL 16.00
-         *       ÖL KL 14:30
-         *       
+         *     Lös så att programmet inte fastnar i while-loopen (kom tillbaka till menyn)
+         *     Lös så att man kan simulera mer än 1 dag
          *    
          */
 
@@ -28,7 +22,6 @@ namespace Hamsterdagis
             ResetData();
             InitializeDB();
         }
-
         #region Startup Methods
         private static void InitializeDB()
         {
@@ -134,7 +127,6 @@ namespace Hamsterdagis
             return noData;
         }
         #endregion
-
         #region Hamster Simulation Methods
         public static bool PlaceHamstersInCages()
         {
@@ -283,6 +275,5 @@ namespace Hamsterdagis
             }
         }
         #endregion
-
     }
 }

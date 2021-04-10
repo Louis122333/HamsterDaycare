@@ -18,7 +18,5 @@ namespace Hamsterdagis
             this.Timestamp = timestamp;
             this.Activity = activity;
         }
-        
-        
     }
 }

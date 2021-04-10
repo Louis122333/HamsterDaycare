@@ -88,7 +88,6 @@ namespace Hamsterdagis.UI
         private static void PrintActivity()
         {
             var dbContext = new HamsterDBContext();
-            var counter = 0;
             var printingActivity = true;
             while (printingActivity)
             {
@@ -97,7 +96,6 @@ namespace Hamsterdagis.UI
                 var activityLogs = dbContext.ActivityLogs.Where(a => a.Timestamp == date).OrderBy(h => h.Hamster.Name);
                 if (activityLogs.Count() > 1)
                 {
-                   
                     Console.SetCursorPosition(20, 5);
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"Date: {date}");
@@ -107,10 +105,15 @@ namespace Hamsterdagis.UI
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"Name   \tActivity   \tTimes Exercised   \tTime waited for first exercise");
                     Console.ResetColor();
+                    Console.SetCursorPosition(20, 8);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("----------------------------------------------------------------------------------");
+                    Console.ResetColor();
+                    Console.ResetColor();
                     Console.WriteLine();
 
                     //Sets the condition for the cursor position, iterates +1 for every hamster
-                    var hamsterCounter = 8;
+                    var hamsterCounter = 9;
                     
                     foreach (var activity in activityLogs)
                     {
@@ -133,10 +136,12 @@ namespace Hamsterdagis.UI
                         }
                         hamsterCounter++;
                     }
-                    
                     var hamsters = dbContext.Hamsters.Where(h => h.CageId != null || h.ExerciseAreaId != null).Count();
                     var exercising = dbContext.Hamsters.Where(h => h.ExerciseArea != null).Count();
-
+                    Console.SetCursorPosition(20, 39);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("----------------------------------------------------------------------------------");
+                    Console.ResetColor();
                     Console.SetCursorPosition(20, 40);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"Number of hamsters in Daycare: {hamsters}");
@@ -146,8 +151,6 @@ namespace Hamsterdagis.UI
                 }
             }
         }
-       
-       
         private static int ExerciseWaitTime(Hamster hamster, DateTime date)
         {
             var activityList = hamster.ActivityLogs.Where(h => h.Activity == Activity.Exercising).ToList().OrderBy(a => a.Timestamp);
@@ -165,7 +168,6 @@ namespace Hamsterdagis.UI
                 return (int)totalwaiting;
             }
         }
-
         private static int GetMenuChoice()
         {
             int userMenuChoice = 0;
@@ -187,6 +189,7 @@ namespace Hamsterdagis.UI
         }
         private static void StartSim()
         {
+            Console.CursorVisible = false;
             Console.Write("Press "); Console.ForegroundColor = ConsoleColor.Green; Console.Write("<Enter>"); Console.ResetColor(); Console.Write(" to start the simulation: ");
             while (Console.ReadKey().Key != ConsoleKey.Enter) { }
             Console.Clear();
@@ -204,11 +207,19 @@ namespace Hamsterdagis.UI
                     Console.ResetColor();
                     break;
                 }
-                while (i == 59 || i == 99)
+                while (i == 40 || i == 67)
                 {
                     Thread.Sleep(1000);
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.Write("Throwing hamsters in cages..");
+                    Console.ResetColor();
+                    break;
+                }
+                while (i == 70)
+                {
+                    Thread.Sleep(1000);
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write("Injecting steroids...           ");
                     Console.ResetColor();
                     break;
                 }
@@ -219,12 +230,6 @@ namespace Hamsterdagis.UI
             Thread.Sleep(1000);
             Console.Clear();
         }
-      
-
-
-
-
     }
-
 }
 

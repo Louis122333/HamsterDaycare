@@ -102,7 +102,6 @@ namespace Hamsterdagis
                 dbContext.SaveChanges();
             }
         }
-
         public void RunSimulation()
         {
             Task.Run(() =>

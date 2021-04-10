@@ -29,7 +29,6 @@ namespace Hamsterdagis.UI
                }
             }
         }
-     
         public static void PrintMenuOptions()
         {
             Prints.PrintMenuPrompt();
@@ -59,8 +58,6 @@ namespace Hamsterdagis.UI
             Console.WriteLine(prompt);
             Console.ResetColor();
         }
-
-       
     }
 
 }

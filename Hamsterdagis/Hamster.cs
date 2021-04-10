@@ -13,7 +13,6 @@ namespace Hamsterdagis
         public int? CageId { get; set; }
         public DateTime? ArrivalTime { get; set; }
         public DateTime? LastTimeExercised { get; set; }
-       
         public virtual Cage Cage { get; set; }
         public int? ExerciseAreaId { get; set; }
         public virtual ExerciseArea ExerciseArea { get; set; }
