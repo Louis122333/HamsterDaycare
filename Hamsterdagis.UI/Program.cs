@@ -15,14 +15,6 @@ namespace Hamsterdagis.UI
             _context.Database.EnsureCreated();
             HamsterDayCare h = new HamsterDayCare();
             UserInterface.MainMenu();
-            
-           
-            
-            
-
-
-
-
 
             Console.ReadLine();
 

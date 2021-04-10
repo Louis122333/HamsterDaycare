@@ -12,7 +12,10 @@ namespace Hamsterdagis
     {
         /*TODO - Fixa Utskrift till Konsollen (skriver ut dubbletter vid ticks)
          *       Skapa metod som räknar hur lång tid hamstrarna har väntat på Exercise
-         *       Skapa en FinalLog som skriver ut info vid dagens slut
+         *       Skapa en FinalLog som skriver ut info vid dagens slut //eller Sökfunktion på specifik hamster
+         *       som skriver ut all info
+         *       
+         *       Fixa ActivityLog
          *       
          *       
          *       
@@ -25,15 +28,16 @@ namespace Hamsterdagis
             ResetData();
             InitializeDB();
         }
+
+        #region Startup Methods
         private static void InitializeDB()
         {
-            
             LoadHamsters();
             CreateCages();
             CreateExerciseArea();
             PlaceHamstersInCages();
         }
-        public static bool ResetData()
+        private static bool ResetData()
         {
             bool noData = false;
             var dbContext = new HamsterDBContext();
@@ -52,7 +56,7 @@ namespace Hamsterdagis
             dbContext.SaveChanges();
             return noData;
         }
-        public static void ClearLogs()
+        private static void ClearLogs()
         {
             var dbContext = new HamsterDBContext();
             if (dbContext.ActivityLogs.Any())
@@ -64,7 +68,7 @@ namespace Hamsterdagis
             }
             dbContext.SaveChanges();
         }
-        public static bool CreateExerciseArea()
+        private static bool CreateExerciseArea()
         {
             bool noData = false;
             var dbContext = new HamsterDBContext();
@@ -76,7 +80,7 @@ namespace Hamsterdagis
             }
             return noData;
         }
-        public static bool CreateCages()
+        private static bool CreateCages()
         {
             bool noData = false;
             var dbcontext = new HamsterDBContext();
@@ -91,7 +95,7 @@ namespace Hamsterdagis
             dbcontext.SaveChanges();
             return noData;
         }
-        public static bool LoadHamsters()
+        private static bool LoadHamsters()
         {
             bool noData = false;
             var dbContext = new HamsterDBContext();
@@ -129,7 +133,9 @@ namespace Hamsterdagis
 
             return noData;
         }
+        #endregion
 
+        #region Hamster Simulation Methods
         public static bool PlaceHamstersInCages()
         {
             var dbContext = new HamsterDBContext();
@@ -156,8 +162,9 @@ namespace Hamsterdagis
                     {
                         var hamster = femaleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
-                        hamster.ActivityLogs.Add(new ActivityLog(DateTime.Now, Activity.Caged));
-                        
+                        var thisDate = DateTime.Now;
+                        var Date = new DateTime(thisDate.Year, thisDate.Month, thisDate.Day, 6, 59, 59);
+                        hamster.ActivityLogs.Add(new ActivityLog(Date, Activity.Arrival));
                     }
                 }
                 else
@@ -166,13 +173,16 @@ namespace Hamsterdagis
                     {
                         var hamster = maleQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
-                        hamster.ActivityLogs.Add(new ActivityLog(DateTime.Now, Activity.Caged));
+                        var thisDate = DateTime.Now;
+                        var Date = new DateTime(thisDate.Year, thisDate.Month, thisDate.Day, 6, 59, 59);
+                        hamster.ActivityLogs.Add(new ActivityLog(Date, Activity.Arrival));
                     }
                 }
             }
             dbContext.SaveChanges();
             return true;
         }
+
         public static void MoveToExercise(char gender)
         {
             var dbContext = new HamsterDBContext();
@@ -197,7 +207,6 @@ namespace Hamsterdagis
                     exerciseArea.Hamsters.Add(hamster);
                     hamster.CageId = null;
                     hamster.ExerciseAreaId = exerciseArea.ExerciseAreaId;
-                    hamster.ActivityLogs.Add(new ActivityLog(Simulation.Date, Activity.Exercising));
                     hamster.LastTimeExercised = Simulation.Date;
                     dbContext.SaveChanges();
                 }
@@ -212,7 +221,6 @@ namespace Hamsterdagis
                         .First();
                     hamster.CageId = null;
                     hamster.ExerciseAreaId = exerciseArea.ExerciseAreaId;
-                    hamster.ActivityLogs.Add(new ActivityLog(Simulation.Date, Activity.Exercising));
                     hamster.LastTimeExercised = Simulation.Date;
                     dbContext.SaveChanges();
                 }
@@ -248,7 +256,6 @@ namespace Hamsterdagis
                         cage.Hamsters.Add(hamster);
                         hamster.CageId = cage.CageId;
                         hamster.ExerciseAreaId = null;
-                        hamster.ActivityLogs.Add(new ActivityLog(Simulation.Date, Activity.Caged));
                     }
                 }
                 else if (maleQueue.Count > 0)
@@ -259,14 +266,10 @@ namespace Hamsterdagis
                         cage.Hamsters.Add(hamster);
                         hamster.CageId = cage.CageId;
                         hamster.ExerciseAreaId = null;
-                        hamster.ActivityLogs.Add(new ActivityLog(Simulation.Date, Activity.Caged));
                     }
                 }
-
             }
             dbContext.SaveChanges();
-
-
         }
         public static void SendHamstersHome()
         {
@@ -279,6 +282,7 @@ namespace Hamsterdagis
                 dbContext.SaveChanges();
             }
         }
+        #endregion
 
     }
 }

@@ -29,6 +29,7 @@ namespace Hamsterdagis.UI
                }
             }
         }
+     
         public static void PrintMenuOptions()
         {
             Prints.PrintMenuPrompt();

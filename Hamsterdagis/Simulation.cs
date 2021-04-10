@@ -27,7 +27,6 @@ namespace Hamsterdagis
         {
             if (Counter == 0)
             {
-                HamsterDayCare.PlaceHamstersInCages();
                 HamsterDayCare.MoveToExercise('K');
             }
             if (Counter == 10)
@@ -80,9 +79,9 @@ namespace Hamsterdagis
                 HamsterDayCare.MoveFromExercise();
                 HamsterDayCare.SendHamstersHome();
             }
-            TickLog();
+            ActivityTracker();
         }
-        public void TickLog()
+        private static void ActivityTracker()
         {
             using (var dbContext = new HamsterDBContext())
             {
@@ -103,6 +102,7 @@ namespace Hamsterdagis
                 dbContext.SaveChanges();
             }
         }
+
         public void RunSimulation()
         {
             Task.Run(() =>
