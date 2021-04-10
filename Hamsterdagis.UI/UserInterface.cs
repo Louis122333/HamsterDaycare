@@ -43,11 +43,10 @@ namespace Hamsterdagis.UI
             }
             else
             {
+                Console.Clear();
                 var simulation = new Simulation(tickSpeed, days);
                 simulation.RunSimulation();
-                Console.Write("Press any key to begin the simualtion...");
-                Console.ReadKey();
-                Console.Clear();
+                StartSim();
                 PrintActivity();
                 MainMenu();
             }
@@ -88,7 +87,7 @@ namespace Hamsterdagis.UI
             }
           
         }
-        public static void PrintActivity()
+        private static void PrintActivity()
         {
             var dbContext = new HamsterDBContext();
             var counter = 0;
@@ -116,8 +115,21 @@ namespace Hamsterdagis.UI
                     var hamsterCounter = 8;
                     foreach (var activity in activityLogs)
                     {
-                        Console.SetCursorPosition(20, hamsterCounter);
-                        Console.WriteLine("{0,-10}\t{1,-12}", activity.Hamster.Name, activity.Activity);
+                        if (activity.Hamster.Gender == 'K')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.SetCursorPosition(20, hamsterCounter);
+                            Console.WriteLine("{0,-10}\t{1,-12}", activity.Hamster.Name, activity.Activity);
+                            Console.ResetColor();
+                        }
+                        if (activity.Hamster.Gender == 'M')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.SetCursorPosition(20, hamsterCounter);
+                            Console.WriteLine("{0,-10}\t{1,-12}", activity.Hamster.Name, activity.Activity);
+                            Console.ResetColor();
+                        }
+                      
                         hamsterCounter++;
                     }
                     
@@ -223,7 +235,7 @@ namespace Hamsterdagis.UI
             }
         }
 
-        public static int GetMenuChoice()
+        private static int GetMenuChoice()
         {
             int userMenuChoice = 0;
             bool validChoice = false;
@@ -241,6 +253,34 @@ namespace Hamsterdagis.UI
                 }
             }
             return userMenuChoice;
+        }
+        private static void StartSim()
+        {
+            Console.Write("Press "); Console.ForegroundColor = ConsoleColor.Green; Console.Write("<Enter>"); Console.ResetColor(); Console.Write(" to start the simulation: ");
+            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+            Console.Clear();
+            for (int i = 0; i <= 100; i++)
+            {
+                Thread.Sleep(50);
+                
+                Console.SetCursorPosition(5, 5);
+                Console.Write("Loading: {0}% ", i);
+                while (i == 14 || i == 35)
+                {
+                    Thread.Sleep(1500);
+                    Console.Write("Separating boys from girls..");
+                    break;
+                }
+                while (i == 59 || i == 99)
+                {
+                    Thread.Sleep(1500);
+                    Console.Write("Throwing hamsters in cages..");
+                    break;
+                }
+            }
+            Console.Write("Complete! Starting simulation...");
+            Thread.Sleep(1000);
+            Console.Clear();
         }
       
 
