@@ -10,16 +10,16 @@ namespace Hamsterdagis
 {
     public class HamsterDayCare
     {
-        /*TODO - Fixa Utskrift till Konsollen (skriver ut dubbletter vid ticks)
+        /*TODO - 
          *       Skapa metod som räknar hur lång tid hamstrarna har väntat på Exercise
+         *       
          *       Skapa en FinalLog som skriver ut info vid dagens slut //eller Sökfunktion på specifik hamster
          *       som skriver ut all info
          *       
-         *       Fixa ActivityLog
+         *       TOMBU KL 16.00
+         *       ÖL KL 14:30
          *       
-         *       
-         *       
-         *       
+         *    
          */
 
         public HamsterDayCare()

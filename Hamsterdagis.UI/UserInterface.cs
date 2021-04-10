@@ -49,7 +49,7 @@ namespace Hamsterdagis.UI
                 Console.ReadKey();
                 Console.Clear();
                 PrintActivity();
-                
+                MainMenu();
             }
         }
         public static void MainMenu()
@@ -65,6 +65,7 @@ namespace Hamsterdagis.UI
                 {
                     case 1:
                         SimulationMenu();
+                        showmenu = false;
                         break;
                     case 2:
                         Prints.PrintHamsters();
@@ -91,27 +92,49 @@ namespace Hamsterdagis.UI
         {
             var dbContext = new HamsterDBContext();
             var counter = 0;
-
-            while (true)
+            var printingActivity = true;
+            while (printingActivity)
             {
                 var date = Simulation.Date;
                 Thread.Sleep(_printSpeed);
                 var activityLogs = dbContext.ActivityLogs.Where(a => a.Timestamp == date).OrderBy(h => h.Hamster.Name);
                 if (activityLogs.Count() > 1)
                 {
+                   
+                    Console.SetCursorPosition(20, 5);
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"Tick: {counter++} Date: {date}");
+                    Console.ResetColor();
                     Console.WriteLine();
-                    Console.WriteLine($"Name   Activity");
+                    Console.SetCursorPosition(20, 7);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Name   \tActivity");
+                    Console.ResetColor();
                     Console.WriteLine();
-                    var hamsterCounter = 0;
+
+                    //Sets the condition for the cursor position, iterates +1 for every hamster
+                    var hamsterCounter = 8;
                     foreach (var activity in activityLogs)
                     {
-                        Console.WriteLine($"{activity.Hamster.Name}  {activity.Activity}");
+                        Console.SetCursorPosition(20, hamsterCounter);
+                        Console.WriteLine("{0,-10}\t{1,-12}", activity.Hamster.Name, activity.Activity);
                         hamsterCounter++;
                     }
-                    Console.WriteLine();
+                    
+                    var hamsters = dbContext.Hamsters.Where(h => h.CageId != null || h.ExerciseAreaId != null).Count();
+                    var exercising = dbContext.Hamsters.Where(h => h.ExerciseArea != null).Count();
+
+                    Console.SetCursorPosition(20, 40);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Number of hamsters in Daycare: {hamsters}");
+                    Console.SetCursorPosition(20, 41);
+                    Console.WriteLine($"Number of hamsters in Exercise Area: {exercising}");
+                    Console.ResetColor();
                 }
             }
+            
+
+
         }
        
         public static void PrintActivity2()
