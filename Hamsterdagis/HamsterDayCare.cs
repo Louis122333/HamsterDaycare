@@ -10,11 +10,6 @@ namespace Hamsterdagis
 {
     public class HamsterDayCare
     {
-        /*TODO - 
-         *     Lös så att programmet inte fastnar i while-loopen (kom tillbaka till menyn)
-         *     Alternativ utökning: Menyval: Sök på hamsternamn och få ut info om aktiviteter/Burplaceringar
-         */
-
         public HamsterDayCare()
         {
             ClearLogs();
