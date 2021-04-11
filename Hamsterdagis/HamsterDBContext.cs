@@ -14,6 +14,8 @@ namespace Hamsterdagis
        public DbSet<Cage> Cages { get; set; }
        public DbSet<ExerciseArea> ExerciseArea { get; set; }
        public DbSet<ActivityLog> ActivityLogs { get; set; }
+
+        // Don't forget to change the server name when testing this application for yourself.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=DESKTOP-DAT1QGR\\SQLEXPRESS;Database=advLouisHeadlamTest;Trusted_Connection=True;MultipleActiveResultSets=True;").UseLazyLoadingProxies();   

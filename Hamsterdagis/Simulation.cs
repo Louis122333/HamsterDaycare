@@ -18,12 +18,12 @@ namespace Hamsterdagis
         {
             Counter = 0;
             var thisDate = DateTime.Now;
-            Date = new DateTime(thisDate.Year, thisDate.Month, thisDate.Day, 7, 0, 0);
+            Date = new DateTime(year: thisDate.Year, month: thisDate.Month, day: thisDate.Day, hour: 7, minute: 0, second: 0);
             SleepTimer = sleepTimer;
             NumOfDays = numOfDays;
             DaysGone = 0;
         }
-        public void OnTick()
+        public void OnCounter()
         {
             if (Counter == 0)
             {
@@ -109,7 +109,7 @@ namespace Hamsterdagis
                 while (NumOfDays > DaysGone)
                 {
                     Thread.Sleep(SleepTimer);
-                    OnTick();
+                    OnCounter();
                     Counter++;
                     Date = Date.AddMinutes(6);
                     if (Counter == 101)
@@ -117,7 +117,14 @@ namespace Hamsterdagis
                         DaysGone++;
                         Counter = 0;
                         var thisDate = DateTime.Now;
-                        Date = new DateTime(thisDate.Year, thisDate.Month, thisDate.Day, 7, 0, 0).AddDays(DaysGone);
+                        Date = new DateTime(thisDate.Year, thisDate.Month, thisDate.Day, hour: 7, minute: 0, second: 0).AddDays(DaysGone);
+
+                        // * Uncomment the two rows at line 126-127 if you want to simulate more than 1 day.
+                        // * The Hamster.CageId doesn't reset to null when simulating 2 days or more.
+                        // * Any other additional data is correct /dev
+
+                        //var dbContext = new HamsterDBContext();
+                        //HamsterDayCare.PlaceHamstersInCages();
                     }
                 }
             });

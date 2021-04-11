@@ -12,7 +12,6 @@ namespace Hamsterdagis
     {
         /*TODO - 
          *     Lös så att programmet inte fastnar i while-loopen (kom tillbaka till menyn)
-         *     Lös så att man kan simulera mer än 1 dag
          *     Alternativ utökning: Menyval: Sök på hamsternamn och få ut info om aktiviteter/Burplaceringar
          */
 
@@ -23,6 +22,10 @@ namespace Hamsterdagis
             InitializeDB();
         }
         #region Startup Methods
+        /// <summary>
+        /// Initializes the holding data needed to run the simulation.
+        /// Reads file from folder in repository, creates cages, an exercise area, and places data from read file in cages
+        /// </summary>
         private static void InitializeDB()
         {
             LoadHamsters();
@@ -116,9 +119,7 @@ namespace Hamsterdagis
                             Age = int.Parse(splitted[1]),
                             Gender = char.Parse(splitted[2]),
                             OwnerName = splitted[3]
-                            
                         });
-                        
                         dbContext.SaveChanges();
                     }
                 }
@@ -127,7 +128,14 @@ namespace Hamsterdagis
             return noData;
         }
         #endregion
+
         #region Hamster Simulation Methods
+
+        /// <summary>
+        /// Creates two gender-separated queues and places three Hamsters in each cage.
+        /// Adds an activity to each hamster's activity log with the value of: Arrival and saves all changes in this context to the database.
+        /// </summary>
+        /// <returns>True or false</returns>
         public static bool PlaceHamstersInCages()
         {
             var dbContext = new HamsterDBContext();
@@ -175,6 +183,13 @@ namespace Hamsterdagis
             return true;
         }
 
+        /// <summary>
+        /// Takes a parameter value of char ('K' for female, 'M' for male) and enqueues a set number of hamsters into a list for exercising.
+        /// Removes cage id and adds an exercise area id for each hamster dequeued.
+        /// Updates property 'LastTimeExercised' to the correct DateTime of the ongoing simulation.
+        /// 
+        /// </summary>
+        /// <param name="gender"></param>
         public static void MoveToExercise(char gender)
         {
             var dbContext = new HamsterDBContext();

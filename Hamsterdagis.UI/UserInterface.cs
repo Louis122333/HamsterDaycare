@@ -11,39 +11,39 @@ namespace Hamsterdagis.UI
     public class UserInterface
     {
         private static int _speed;
-        public static void SimulationMenu()
+        private static void SimulationInputMenu()
         {
             Console.Write("Enter how many days you want to simulate: ");
             _ = int.TryParse(Console.ReadLine(), out int days);
-            if (days == 0 || days > 10)
+            if (days <= 0 || days > 5)
             {
                 Console.WriteLine("Please enter a valid number.");
                 Console.WriteLine("Press any key to return...");
                 Console.ReadKey();
-                SimulationMenu();
+                SimulationInputMenu();
             }
             Console.Write("Enter the tick speed (ms): ");
             _ = int.TryParse(Console.ReadLine(), out int tick);
-            if (tick < 1 || tick > 3000)
+            if (tick < 1 || tick > 5000)
             {
                 Console.WriteLine("Invalid tick speed");
                 Console.WriteLine("Press any key to return");
                 Console.ReadKey();
-                SimulationMenu();
+                SimulationInputMenu();
             }
             Console.Write("Enter the print speed (ms): ");
             _ = int.TryParse(Console.ReadLine(), out int speed);
             _speed = speed;
             if (speed < tick)
             {
-                Console.WriteLine("Print speed must be higher or equal to tick speed");
+                Console.WriteLine($"Print speed must be higher or equal to tick speed ({tick})");
                 Console.WriteLine("Press any key...");
                 Console.ReadKey();
-                SimulationMenu();
+                SimulationInputMenu();
             }
             else
             {
-                StartSim();
+                LoadSimulation();
                 Console.Clear();
                 var simulation = new Simulation(tick, days);
                 simulation.RunSimulation();
@@ -62,7 +62,7 @@ namespace Hamsterdagis.UI
                 switch (menuChoice)
                 {
                     case 1:
-                        SimulationMenu();
+                        SimulationInputMenu();
                         break;
                     case 2:
                         Prints.PrintHamsters();
@@ -110,7 +110,7 @@ namespace Hamsterdagis.UI
                     Console.ResetColor();
                     Console.WriteLine();
 
-                    //Sets the condition for the cursor position, iterates +1 for every hamster
+                    //Sets the condition of the cursor position, increased by +1 for every hamster
                     var hamsterCounter = 9;
                     
                     foreach (var activity in activityLogs)
@@ -152,7 +152,7 @@ namespace Hamsterdagis.UI
         private static int ExerciseWaitTime(Hamster hamster, DateTime date)
         {
             var activityList = hamster.ActivityLogs.Where(h => h.Activity == Activity.Exercising).ToList().OrderBy(a => a.Timestamp);
-            var arrivalTime = new TimeSpan(7, 0, 0);
+            var arrivalTime = new TimeSpan(hours: 7, minutes: 0, seconds: 0);
             if (activityList.Any())
             {
                 var waitTime = activityList.First().Timestamp.TimeOfDay - arrivalTime;
@@ -185,7 +185,7 @@ namespace Hamsterdagis.UI
             }
             return userMenuChoice;
         }
-        private static void StartSim()
+        private static void LoadSimulation()
         {
             Console.CursorVisible = false;
             Console.Write("Press "); Console.ForegroundColor = ConsoleColor.Green; Console.Write("<Enter>"); Console.ResetColor(); Console.Write(" to start the simulation: ");
