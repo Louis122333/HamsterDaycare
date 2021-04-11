@@ -18,7 +18,7 @@ Build a simulated hamster daycare that correctly handles 30 hamsters based on th
 * Upon departure we want to know what the hamsters have been doing and how many times they've exercised.
   Also, for how long they had to wait for their first exercise.
   
-* The days are simulated by ticks, that is translated to a DateTime-based TimeStamp 
+* The days are simulated by ticks, that are translated to a DateTime-based TimeStamp 
   100 ticks equals a day (07:00 - 17:00)
   1 tick equals 6 minutes
  
