@@ -35,7 +35,7 @@ Build a simulated hamster daycare that correctly handles 30 hamsters based on th
   ![image](https://user-images.githubusercontent.com/74004258/114287592-3f0c9e80-9a68-11eb-8f6c-8e5c7a61b488.png)
   
   A sample of the database:
-  https://docs.google.com/document/d/109buaUEUfnCeGdOUzrfwj2tTGduPt2xCQSSVEGPjxHk/edit?usp=sharing
+  ![image](https://user-images.githubusercontent.com/74004258/114288785-5ea8c480-9a72-11eb-9a7b-f250ae75c414.png)
 
   
   
