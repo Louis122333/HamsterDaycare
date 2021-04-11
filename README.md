@@ -31,8 +31,11 @@ Build a simulated hamster daycare that correctly handles 30 hamsters based on th
   A cage can hold a maximum of 3 hamsters, and 6 hamsters can exercise at the same time (for atleast one hour).
   Cages and exercising has to be gender-segregated.
   
-  A sample of the final output:
+  A sample of the console output:
   ![image](https://user-images.githubusercontent.com/74004258/114287592-3f0c9e80-9a68-11eb-8f6c-8e5c7a61b488.png)
+  
+  A sample of the database:
+  https://docs.google.com/document/d/109buaUEUfnCeGdOUzrfwj2tTGduPt2xCQSSVEGPjxHk/edit?usp=sharing
 
   
   
